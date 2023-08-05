@@ -1,89 +1,51 @@
-import React, {useState, useContext} from 'react';
-import {useHistory} from 'react-router-dom';
-import {CartContext} from './CartContext';
+import React from 'react';
+import {Link, useHistory} from 'react-router-dom';
+import {Button} from 'react-bootstrap';
+import {Container,Row,Col} from "react-bootstrap";
+import Cupcake from "../Cupcake.json";
+import Lottie from "lottie-react";
 
 
 
 
-const homes =[
-  {id:1, image: 'house1.jpg',
-  location: 'Seattle, Washington',
-   costPerNight: 199},
-  {id:2, image: 'house2.jpg',
-  location: 'Las Vegas, Nevada',
-  costPerNight: 215},
-  {id:3, image: 'house3.jpg',
-  location: 'Phoenix, Arizona',
-  costPerNight: 145},
-  {id:4, image: 'house4.jpg',
-  location: 'Maui, Hawaii',
-  costPerNight: 320},
-  {id:5, image: 'house5.jpg',
-  location: 'Boston, Massachussetes',
-  costPerNight: 125},
-  {id:6, image: 'house6.jpg',
-  location: 'Spokane, Washington',
-  costPerNight: 325},
-  {id:7, image: 'house7.jpg',
-  location: 'Honolulu, Hawaii',
-  costPerNight: 525},
-  {id:8, image: 'house8.jpg',
-  location: 'Boise, Idaho',
-  costPerNight: 185},
-  {id:9, image: 'house9.jpg',
- location: 'CordeLain, Idaho',
-  costPerNight: 210},
-];
+//Define Home function
+function Home () {
+// Create a variable called history and assign it a value from the useHistory function
+  const history = useHistory();
+
+  // Define a function called handleButtonClicked
+  const handleButtonClicked = () =>
+  {  
+    
+    // When the button is clicked, use the history object to navigate to the "/about" page
+    history.push("/about.js");
+  };
+  
 
 
-
-const Home = () => {
-  const history = useHistory(); 
-   const[cart,setCart] = useState([]);
-
-   const addToCart = (home) => {
-    setCart((prevCart) =>
-    [...prevCart,home]);
-   };
-
-   const handleSelectChange = (e, homeId) => {
-    const nights = parseInt(e.target.value);
-    const updatedCart = cart.map((item) =>{
-      if (item.id === homeId){
-        return {...item,nights};
-      }
-      return item;
-    });
-    setCart(updatedCart);
-   };
-
-   const handleCartButtonClick = () =>{
-    history.push('cart',{cart});
-   };
-
-   return(
-    <div>
-      <h1>Home Page</h1>
-      <div>
-        {homes.map((home) => (
-        <div key={home.id}>
-          <img src={home.image}
-          alt={home.location}/>
-          <p>{home.location}</p>
-          <p>Cost per night:${home.costPerNight}</p>
-          <button onClick={() => addToCart(home)}>Add To Cart</button>
-          <select onChange={(e) => handleSelectChange(e,home.id)}>
-            <option value="1">1 night</option>
-            <option value="2">2 night</option>
-            <option value="3">3 night</option>
-            <option value="4">4 night</option>
-          </select>
-      </div>
-        ))}
-      </div>
-      <button onClick ={handleCartButtonClick}>Cart</button>
+  return ( 
+<Container>
+  <div className="d-flex justify-content-center align-items-center Hero mb-5 pb-4">
+  <div className="card intro mt-5">
+      <h1 className="card-title text-secondary">Heavenly Cupcakes</h1>
+      <Lottie id="lottie" animationData={Cupcake}/>
+    <div className="card-body  p-4">
+        <p className="intro-para card-text pt-3 pb-4 w-150 ">Indulge in a world of delectable delights at our bakery, where every bite is a blissful experience.<br></br> Savor the perfect balance of flavors, textures, and creativity in every creation.Welcome to a haven<br></br> of sweetness and joy, where dessert dreams come true!</p>
+        <Link to="/About">
+          <Button className="enter-btn btn btn-success  "onClick={handleButtonClicked}>About</Button>
+        </Link>
     </div>
+  </div>
+  </div>
+
+
+   
+  
+  
+
+  </Container>
+  
   );
-};
+}
 
 export default Home;
